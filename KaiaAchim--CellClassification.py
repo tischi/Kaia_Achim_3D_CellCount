@@ -81,7 +81,7 @@ def analyze(iDataSet, tbModel, p, output_folder):
   
   # Trans
   file_id = tbModel.getFileName(iDataSet, "TRANS", "IMG")
-  parameters = "open="+file_path+" file=(^"+file_id+"--W.*Trans.tif) sort"
+  parameters = "open=["+file_path+"] file=(^"+file_id+"--W.*Trans.tif) sort"
   IJ.run("Image Sequence...", parameters);
   imp = IJ.getImage()
   output_file = str(file_id)+"--Trans--Segmentation.tif"
@@ -91,7 +91,7 @@ def analyze(iDataSet, tbModel, p, output_folder):
   
   # Dapi
   file_id = tbModel.getFileName(iDataSet, "DAPI", "IMG")
-  parameters = "open="+file_path+" file=(^"+file_id+"--W.*Dapi.tif) sort"
+  parameters = "open=["+file_path+"] file=(^"+file_id+"--W.*Dapi.tif) sort"
   IJ.run("Image Sequence...", parameters);
   imp = IJ.getImage()
   output_file = str(file_id)+"--Dapi--Segmentation.tif"
@@ -263,8 +263,10 @@ def determine_input_files(folder_name, tbModel):
 	for filename in filenames:
 	   if filename == "Thumbs.db":
 	     continue
+	   if filename == ".DS_Store":
+	     continue
 	   match = re.search(pattern, filename)
-	   if match.group(1) == None:
+	   if match == None:
 	     print "filename does not match:",filename
 	     ddd
 	   ids.append(match.group(1))
